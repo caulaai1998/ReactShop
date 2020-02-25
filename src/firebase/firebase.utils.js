@@ -15,12 +15,14 @@ const config= {
     measurementId: "G-SCK2CR60F7"
   };
 
+  firebase.initializeApp(config);
+
   export const createUserProfileDocument = async (userAuth,additionalData) => {
     if(!userAuth) return;
 
     const userRef = firestore.doc(`users/${userAuth.uid}`);
 
-    const snapShot = userRef.get();
+    const snapShot = await userRef.get();
 
     if(!snapShot.exists){
       const {displayName, email} = userAuth;
@@ -41,7 +43,7 @@ const config= {
   };
 
 
-  firebase.initializeApp(config);
+  
 
   export const auth = firebase.auth();
   export const firestore=firebase.firestore();
